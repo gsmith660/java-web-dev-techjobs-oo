@@ -1,14 +1,25 @@
 package org.launchcode.techjobs_oo.Tests;
 
+import org.junit.Before;
 import org.launchcode.techjobs_oo.*;
 
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 public class JobTest {
+    Job emptyJob;
+    Job testJob;
+    Job partialJob;
+
+    @Before
+    public void initializeTwoJobs() {
+        emptyJob = new Job();
+        testJob = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
+        partialJob = new Job("Product tester", new Employer("ACME"), new Location(), new PositionType(), new CoreCompetency());
+    }
+
     @Test
     public void testSettingJobId() {
         Job job1 = new Job();
@@ -42,4 +53,38 @@ public class JobTest {
         Job job2 = new Job("Product tester", employer, location, positionType, coreCompetency);
         assertFalse(job1.equals(job2));
     }
+
+    @Test
+    public void testJobToStringBeginsAndEndsWithBlankLine() {
+        String testString = testJob.toString();
+
+        assertEquals('\n', testString.charAt(0));
+        assertEquals('\n', testString.charAt(testString.length() - 1));
+    }
+
+    @Test
+    public void testJobToStringAllFieldsDisplayed() {
+        String testString = testJob.toString();
+        String[] lines = testString.split("\n");
+        assertEquals("ID: 2", lines[1]);
+        assertEquals("Name: Product tester", lines[2]);
+        assertEquals("Employer: ACME", lines[3]);
+        assertEquals("Location: Desert", lines[4]);
+        assertEquals("Position Type: Quality control", lines[5]);
+        assertEquals("Core Competency: Persistence", lines[6]);
+    }
+
+    @Test
+    public void testJobToStringEmptyFieldsDisplayedWithMessage() {
+        String testString = partialJob.toString();
+        String[] lines = testString.split("\n");
+        assertEquals("ID: 3", lines[1]);
+        assertEquals("Name: Product tester", lines[2]);
+        assertEquals("Employer: ACME", lines[3]);
+        assertEquals("Location: Data not available", lines[4]);
+        assertEquals("Position Type: Data not available", lines[5]);
+        assertEquals("Core Competency: Data not available", lines[6]);
+    }
+
+
 }
