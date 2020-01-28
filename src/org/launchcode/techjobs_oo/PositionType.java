@@ -31,7 +31,7 @@ public class PositionType {
         if (this == o) return true;
         if (!(o instanceof PositionType)) return false;
         PositionType that = (PositionType) o;
-        return id == that.id;
+        return id == that.getId();
     }
 
     @Override
