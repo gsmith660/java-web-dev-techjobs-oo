@@ -48,22 +48,24 @@ public class Job {
     // TODO: Add custom toString method
     @Override
     public String toString() {
-        return "\n" +
-                "ID: " + id + "\n" +
-                "Name: " + name + "\n" +
-                "Employer: " + employer + "\n" +
-                "Location: " + location + "\n" +
-                "Position Type: " + positionType + "\n" +
-                "Core Competency: " + coreCompetency + "\n" +
-                "\n";
-//        return "\n" +
-//                "ID: " + id + "\n" +
-//                "Name: " + name + "\n" +
-//                "Employer: " + employer + "\n" +
-//                "Location: " + location + "\n" +
-//                "Position Type: " + positionType + "\n" +
-//                "Core Competency: " + coreCompetency + "\n" +
-//                "\n";
+        if ((name == null || name.equals("")) &&
+                (employer == null || employer.getValue() == null) &&
+                (location == null || location.getValue() == null) &&
+                (positionType == null || positionType.getValue() == null) &&
+                (coreCompetency == null || coreCompetency.getValue() == null)) {
+            return "OOPS! This job does not seem to exist.";
+        } else {
+            String nanMessage = "Data not available";
+            String output = "\n";
+            output += "ID: " + id + "\n";
+            output += "Name: " + (name == null || name.equals("") ? nanMessage : name)  + "\n";
+            output += "Employer: " + (employer == null || employer.getValue() == null ? nanMessage : employer) + "\n";
+            output += "Location: " + (location == null || location.getValue() == null ? nanMessage : location) + "\n";
+            output += "Position Type: " + (positionType == null || positionType.getValue() == null ? nanMessage : positionType) + "\n";
+            output += "Core Competency: " + (coreCompetency == null || coreCompetency.getValue() == null ? nanMessage : coreCompetency) + "\n";
+            output += "\n";
+            return output;
+        }
     }
 
 

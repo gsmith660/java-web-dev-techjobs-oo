@@ -1,6 +1,6 @@
 package org.launchcode.techjobs_oo.Tests;
 
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.launchcode.techjobs_oo.*;
 
 import org.junit.Test;
@@ -9,12 +9,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 public class JobTest {
-    Job emptyJob;
-    Job testJob;
-    Job partialJob;
+    private static Job emptyJob;
+    private static Job testJob;
+    private static Job partialJob;
 
-    @Before
-    public void initializeTwoJobs() {
+    @BeforeClass
+    public static void initializeTwoJobs() {
         emptyJob = new Job();
         testJob = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
         partialJob = new Job("Product tester", new Employer("ACME"), new Location(), new PositionType(), new CoreCompetency());
@@ -30,17 +30,11 @@ public class JobTest {
 
     @Test
     public void testJobConstructorSetsAllFields() {
-        Job job = new Job("Product tester", new Employer("ACME"), new Location("Desert"), new PositionType("Quality control"), new CoreCompetency("Persistence"));
-//        assertTrue(job.getName() instanceof String);
-//        assertTrue(job.getEmployer() instanceof Employer);
-//        assertTrue(job.getLocation() instanceof Location);
-//        assertTrue(job.getPositionType() instanceof PositionType);
-//        assertTrue(job.getCoreCompetency() instanceof CoreCompetency);
-        assertEquals("Product tester", job.getName());
-        assertEquals("ACME", job.getEmployer().getValue());
-        assertEquals("Desert", job.getLocation().getValue());
-        assertEquals("Quality control", job.getPositionType().getValue());
-        assertEquals("Persistence", job.getCoreCompetency().getValue());
+        assertEquals("Product tester", testJob.getName());
+        assertEquals("ACME", testJob.getEmployer().getValue());
+        assertEquals("Desert", testJob.getLocation().getValue());
+        assertEquals("Quality control", testJob.getPositionType().getValue());
+        assertEquals("Persistence", testJob.getCoreCompetency().getValue());
     }
 
     @Test
@@ -57,7 +51,6 @@ public class JobTest {
     @Test
     public void testJobToStringBeginsAndEndsWithBlankLine() {
         String testString = testJob.toString();
-
         assertEquals('\n', testString.charAt(0));
         assertEquals('\n', testString.charAt(testString.length() - 1));
     }
@@ -84,6 +77,11 @@ public class JobTest {
         assertEquals("Location: Data not available", lines[4]);
         assertEquals("Position Type: Data not available", lines[5]);
         assertEquals("Core Competency: Data not available", lines[6]);
+    }
+
+    @Test
+    public void testJobToStringEmptyJobMessage() {
+        assertEquals("OOPS! This job does not seem to exist.", emptyJob.toString());
     }
 
 
